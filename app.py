@@ -19,7 +19,14 @@ def home():
 def predict():
     try:
         data = request.json
-        df = pd.DataFrame([data])
+
+        # ✅ FORCE correct order
+        df = pd.DataFrame([[ 
+            data['Age'],
+            data['Sex'],
+            data['Pclass'],
+            data['Embarked']
+        ]], columns=['Age','Sex','Pclass','Embarked'])
 
         prediction = model.predict(df)[0]
 
