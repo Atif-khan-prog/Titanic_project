@@ -117,7 +117,7 @@ document.getElementById("form").onsubmit = async (e) => {
   const result = await res.json();
 
   document.getElementById("result").innerText =
-    result.prediction == 1 ? "🚢 Survived" : "💀 Not Survived";
+    result.prediction == 1 ? " Survived" : " Not Survived";
 };
 </script>
 
