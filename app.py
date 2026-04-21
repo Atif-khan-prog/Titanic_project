@@ -20,12 +20,11 @@ def predict():
     try:
         data = request.json
 
-        # ✅ FORCE correct order
-        df = pd.DataFrame([[ 
-            data['Age'],
-            data['Sex'],
-            data['Pclass'],
-            data['Embarked']
+        df = pd.DataFrame([[
+            float(data['Age']),
+            int(data['Sex']),
+            int(data['Pclass']),
+            int(data['Embarked'])
         ]], columns=['Age','Sex','Pclass','Embarked'])
 
         prediction = model.predict(df)[0]
