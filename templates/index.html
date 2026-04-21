@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+small {
+    color: #666;
+    font-size: 12px;
+    display: block;
+    margin-top: -8px;
+    margin-bottom: 10px;
+}
+
+#result {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<form id="form">
+
+  ID: <input name="Passengerid">
+
+  Age: <input name="Age">
+
+  <!-- SEX INPUT -->
+  Sex:
+  <select id="sex">
+    <option value="0">Male</option>
+    <option value="1">Female</option>
+  </select>
+
+  <!-- EMBARKED -->
+  Embarked:
+  <select id="embarked">
+    <option value="0">C (Cherbourg)</option>
+    <option value="1">Q (Queenstown)</option>
+    <option value="2">S (Southampton)</option>
+  </select>
+
+  <small>
+    Embarked = Port where passenger boarded:<br>
+    C = Cherbourg, Q = Queenstown, S = Southampton
+  </small>
+
+  <button type="submit">Predict</button>
+</form>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+document.getElementById("form").onsubmit = async (e) => {
+  e.preventDefault();
+
+  const data = {
+    Passengerid: document.querySelector("[name='Passengerid']").value,
+    Age: document.querySelector("[name='Age']").value,
+    Sex: document.getElementById("sex").value,
+    Embarked: document.getElementById("embarked").value
+  };
+
+  const res = await fetch("http://127.0.0.1:5000/predict", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  document.getElementById("result").innerText =
+    result.prediction == 1 ? "🚢 Survived" : "💀 Not Survived";
+};
+</script>
+
+</body>
+</html> 
