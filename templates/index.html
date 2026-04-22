@@ -110,8 +110,8 @@ document.getElementById("form").onsubmit = async (e) => {
 
   document.getElementById("result").innerText =
     result.prediction == 1
-      ? "✅ Survived" + (prob !== undefined ? ` (${prob.toFixed(2)})` : "")
-      : "❌ Not Survived" + (prob !== undefined ? ` (${prob.toFixed(2)})` : "");
+      ? "not Survived" + (prob !== undefined ? ` (${prob.toFixed(2)})` : "")
+      : "Survived" + (prob !== undefined ? ` (${prob.toFixed(2)})` : "");
 };
 </script>
 
