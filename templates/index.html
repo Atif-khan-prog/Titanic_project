@@ -85,13 +85,13 @@ document.getElementById("form").onsubmit = async (e) => {
   e.preventDefault();
 
   const data = {
-    Age: parseFloat(document.querySelector("[name='Age']").value),
-    Sex: parseInt(document.getElementById("sex").value),
-    Pclass: parseInt(document.getElementById("Pclass").value),
-    Embarked: parseInt(document.getElementById("embarked").value)
+    Age: document.querySelector("[name='Age']").value,
+    Sex: document.getElementById("sex").value,
+    Pclass: document.getElementById("Pclass").value,
+    Embarked: document.getElementById("embarked").value
   };
 
-  const res = await fetch("/predict", {
+  const res = await fetch("/predict", {   // ✅ FIXED HERE
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data)
@@ -99,19 +99,8 @@ document.getElementById("form").onsubmit = async (e) => {
 
   const result = await res.json();
 
-  console.log(result);
-
-  if (result.error) {
-    document.getElementById("result").innerText = "Error: " + result.error;
-    return;
-  }
-
-  let prob = result.probability_survive;
-
   document.getElementById("result").innerText =
-    result.prediction == 1
-      ? "not Survived" + (prob !== undefined ? ` (${prob.toFixed(2)})` : "")
-      : "Survived" + (prob !== undefined ? ` (${prob.toFixed(2)})` : "");
+    result.prediction == 1 ? " Survived" : " Not Survived";
 };
 </script>
 
