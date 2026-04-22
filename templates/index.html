@@ -91,8 +91,6 @@ document.getElementById("form").onsubmit = async (e) => {
     Embarked: parseInt(document.getElementById("embarked").value)
   };
 
-  console.log("Sending:", data);
-
   const res = await fetch("/predict", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
@@ -101,15 +99,19 @@ document.getElementById("form").onsubmit = async (e) => {
 
   const result = await res.json();
 
+  console.log(result);
+
   if (result.error) {
     document.getElementById("result").innerText = "Error: " + result.error;
     return;
   }
 
+  let prob = result.probability_survive;
+
   document.getElementById("result").innerText =
     result.prediction == 1
-      ? `✅ Survived (Prob: ${result.probability_survive.toFixed(2)})`
-      : `❌ Not Survived (Prob: ${result.probability_survive.toFixed(2)})`;
+      ? "✅ Survived" + (prob !== undefined ? ` (${prob.toFixed(2)})` : "")
+      : "❌ Not Survived" + (prob !== undefined ? ` (${prob.toFixed(2)})` : "");
 };
 </script>
 
