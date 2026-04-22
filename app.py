@@ -9,7 +9,7 @@ app = Flask(__name__)
 # ✅ Enable CORS for all routes
 CORS(app)
 
-model = joblib.load("model1.pkl")
+model = joblib.load("model.pkl")
 
 @app.route('/')
 def home():
